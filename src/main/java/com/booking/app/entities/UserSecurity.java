@@ -9,17 +9,13 @@ import org.springframework.data.repository.CrudRepository;
 @Table(name = "user_security")
 public class UserSecurity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private String login;
 
     @Column(nullable = false)
     private String password;
-
-    @OneToOne(mappedBy = "security")
-    private User user;
-
 }
+

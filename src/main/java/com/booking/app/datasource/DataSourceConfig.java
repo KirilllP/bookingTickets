@@ -1,9 +1,6 @@
-package com.booking.app.config;
+package com.booking.app.datasource;
 
 
-import com.booking.app.repositories.UserRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
