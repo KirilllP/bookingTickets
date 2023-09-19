@@ -1,8 +1,9 @@
-package com.booking.app.entities;
+package com.booking.app.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.repository.CrudRepository;
+
+import java.util.UUID;
 
 @Data
 @Entity

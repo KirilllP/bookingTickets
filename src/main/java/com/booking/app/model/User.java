@@ -1,4 +1,4 @@
-package com.booking.app.entities;
+package com.booking.app.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

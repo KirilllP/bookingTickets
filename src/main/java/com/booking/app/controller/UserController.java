@@ -1,6 +1,6 @@
 package com.booking.app.controller;
 
-import com.booking.app.entities.User;
+import com.booking.app.model.User;
 import com.booking.app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

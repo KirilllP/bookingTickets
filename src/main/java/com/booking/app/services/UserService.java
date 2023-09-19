@@ -1,6 +1,6 @@
 package com.booking.app.services;
 
-import com.booking.app.entities.User;
+import com.booking.app.model.User;
 import com.booking.app.exceptions.NoValidIdException;
 import com.booking.app.exceptions.NotFoundException;
 import com.booking.app.repositories.UserDataJpaRepository;
