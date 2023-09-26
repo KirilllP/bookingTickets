@@ -12,11 +12,12 @@ public class DataSourceConfig {
     @Bean
     public DataSource dataSource()
     {
-        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+        DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("org.postgresql.Driver");
         dataSourceBuilder.url("jdbc:postgresql://localhost:5432/postgres");
         dataSourceBuilder.username("postgres");
         dataSourceBuilder.password("postgres");
         return dataSourceBuilder.build();
+
     }
 }

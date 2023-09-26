@@ -1,8 +1,17 @@
 package com.booking.app.controller;
 
-import com.booking.app.model.User;
+import com.booking.app.controller.api.UserAPI;
+import com.booking.app.controller.dto.ResponseDTO;
+import com.booking.app.controller.dto.UserDTO;
+import com.booking.app.entity.User;
 import com.booking.app.services.UserService;
+import com.booking.app.services.impl.UserServiceImpl;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import org.mapstruct.control.MappingControl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,38 +19,43 @@ import java.util.UUID;
 
 @RestController
 //@Slf4j
-public class UserController {
+public class UserController implements UserAPI {
 
     private final UserService service;
 
     @Autowired
-    public UserController(UserService service) {
-        super();
+    public UserController(@Qualifier("userServiceImpl") UserService service) {
         this.service = service;
     }
 
-    @GetMapping("/users")
-    List<User> all() {
-        return service.allUsers();
+    @GetMapping("/get/{id}")
+    @Override
+    public ResponseDTO<UserDTO> getByID(@PathVariable UUID id) {
+        return ResponseDTO.<UserDTO>builder().data(service.getById(id)).build();
     }
 
-    @PostMapping("/users")
-    User newUser(@RequestBody User newUser) {
-        return service.addNewUser(newUser);
+    @GetMapping("/get")
+    @Override
+    public ResponseDTO<List<UserDTO>> getAll() {
+        return ResponseDTO.<List<UserDTO>>builder().data(service.getAll()).build();
     }
 
-    @GetMapping("/users/{id}")
-    User one(@PathVariable UUID id) {
-        return service.findUserById(id);
+    @PutMapping("/put/{id}")
+    @Override
+    public ResponseDTO<UserDTO> update(@PathVariable UUID id, @RequestBody UserDTO user) {
+        return ResponseDTO.<UserDTO>builder().data(service.update(id, user)).build();
     }
 
-    @PutMapping("/users/{id}")
-    User updateUser(@PathVariable UUID id, @RequestBody User updatedUser) {
-        return service.updateUser(id, updatedUser);
+    @PostMapping("/create")
+    @Override
+    public ResponseDTO<UserDTO> create(@RequestBody UserDTO userDTO) {
+        return ResponseDTO.<UserDTO>builder().data(service.create(userDTO)).build();
     }
 
-    @DeleteMapping("/users/{id}")
-    void deleteUser(@PathVariable UUID id) {
-        service.deleteUserById(id);
+
+    @DeleteMapping("/delete/{id}")
+    @Override
+    public void delete(@PathVariable UUID id) {
+       service.delete(id);
     }
 }
