@@ -1,13 +1,18 @@
-package com.booking.app.model;
+package com.booking.app.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Data
 @Entity
 @Table(name = "user_security")
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserSecurity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

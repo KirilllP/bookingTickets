@@ -1,9 +1,14 @@
 package com.booking.app.exceptions;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
@@ -14,7 +19,6 @@ import java.util.List;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
-
     @ExceptionHandler(value = {NotFoundException.class})
     public ResponseEntity<Object> catchNoContentException(NotFoundException e) {
 
@@ -27,7 +31,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         );
         return new ResponseEntity<>(apiException, noFound);
     }
-
     @ExceptionHandler(value = {NoValidIdException.class})
     public ResponseEntity<Object> catchNoValidIdException(NoValidIdException e) {
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
@@ -39,5 +42,4 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         );
         return new ResponseEntity<>(apiException, badRequest);
     }
-
 }
