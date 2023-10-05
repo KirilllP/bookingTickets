@@ -23,5 +23,7 @@ public class UserSecurity {
 
     @Column(nullable = false)
     private String password;
+
+
 }
 
