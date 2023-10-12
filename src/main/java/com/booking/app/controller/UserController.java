@@ -1,8 +1,8 @@
-package com.booking.app.controllers;
+package com.booking.app.controller;
 
-import com.booking.app.controllers.api.UserAPI;
-import com.booking.app.controllers.dto.ResponseDTO;
-import com.booking.app.controllers.dto.UserDTO;
+import com.booking.app.controller.api.UserAPI;
+import com.booking.app.controller.dto.ResponseDTO;
+import com.booking.app.controller.dto.UserDTO;
 import com.booking.app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,32 +26,31 @@ public class UserController implements UserAPI {
     @GetMapping("/get/{id}")
     @Override
     public ResponseDTO<UserDTO> getByID(@PathVariable UUID id) {
-        return ResponseDTO.<UserDTO>builder().data(service.getById(id)).build();
+        return new ResponseDTO<UserDTO>(service.getById(id));
     }
 
     @GetMapping("/get")
     @Override
     public ResponseDTO<List<UserDTO>> getAll() {
-        return ResponseDTO.<List<UserDTO>>builder().data(service.getAll()).build();
+        return new ResponseDTO<List<UserDTO>>(service.getAll());
     }
 
     @PutMapping("/put/{id}")
     @Override
     public ResponseDTO<UserDTO> update(@PathVariable UUID id, @RequestBody UserDTO user) {
-        return ResponseDTO.<UserDTO>builder().data(service.update(id, user)).build();
+        return new ResponseDTO<UserDTO>(service.update(id, user));
     }
 
     @PostMapping("/create")
     @Override
     public ResponseDTO<UserDTO> create(@RequestBody UserDTO userDTO) {
-        return ResponseDTO.<UserDTO>builder().data(service.create(userDTO)).build();
+        return new ResponseDTO<UserDTO>(service.create(userDTO));
     }
-
 
     @DeleteMapping("/delete/{id}")
     @Override
     public void delete(@PathVariable UUID id) {
-       service.delete(id);
+        service.delete(id);
     }
 
 

@@ -1,9 +1,9 @@
 package com.booking.app.services.impl;
 
-import com.booking.app.controllers.dto.RegistrationDTO;
-import com.booking.app.controllers.dto.UserDTO;
+import com.booking.app.controller.dto.UserDTO;
 import com.booking.app.entity.User;
-import com.booking.app.mappers.UserMapper;
+import com.booking.app.exceptionhandling.exception.ResourceNotFoundException;
+import com.booking.app.mapper.UserMapper;
 import com.booking.app.repositories.UserDataRepository;
 import com.booking.app.services.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,10 +29,6 @@ public class UserServiceImpl implements UserService {
         this.repository = repository;
     }
 
-    @Override
-    public RegistrationDTO create(RegistrationDTO user) {
-        return mapper.toDTORegistration(repository.save(mapper.toEntityRegistration(user).setRegistrationDate(LocalDateTime.now())));
-    }
 
     @Override
     public UserDTO create(UserDTO userDTO) {
@@ -46,7 +42,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getById(UUID id) {
-        return mapper.toDTO(repository.findById(id).get());
+        User user = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No user by ID: " + id));
+        return mapper.toDTO(user);
     }
 
     @Override
@@ -62,20 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
+
+
+
 }
-
-
-//!!mapstruct
-//            @Mapper(componentModel = "spring")
-//            public abstract class UserMapper {
-//                private final Logger logger = LoggerFactory.getLogger(UserMapper.class);
-//
-//                @Mapping(source = "repoUser.name", target = "firstName")
-//                @Mapping(source = "repoUser.surname", target = "lastName")
-//                public abstract UserDto toDto(RepoUser repoUser);
-//
-//                @AfterMapping
-//                public void setUuid(RepoUser repoUser, @MappingTarget UserDto userDto) {
-//                    userDto.setUuid(String.valueOf(UUID.randomUUID()));
-//                }
-//            }

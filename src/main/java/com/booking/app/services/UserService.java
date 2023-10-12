@@ -1,7 +1,6 @@
 package com.booking.app.services;
 
-import com.booking.app.controllers.dto.RegistrationDTO;
-import com.booking.app.controllers.dto.UserDTO;
+import com.booking.app.controller.dto.UserDTO;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -12,10 +11,6 @@ public interface UserService {
 
     @Transactional
     UserDTO create(UserDTO user);
-
-    @Transactional
-    RegistrationDTO create(RegistrationDTO user);
-
 
     List<UserDTO> getAll();
 

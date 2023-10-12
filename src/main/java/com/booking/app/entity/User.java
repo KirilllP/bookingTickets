@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -15,6 +17,7 @@ import java.util.UUID;
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 
     @Id
@@ -31,20 +34,21 @@ public class User {
     @Column(name = "date_birth")
     private Date dateBirth;
 
-    @Column(name = "passport_number", unique = true)
-    private Integer passportNumber;
-
-    @Column(name = "registration_date", nullable = false)
-    private Date registrationDate;
+    @Column(name = "registration_date")
+    @CreatedDate
+    private LocalDate registrationDate;
 
     @Column(name = "phone_number", unique = true)
     private String phoneNumber;
 
-    @Email
-    @Column(unique = true, nullable = false)
-    private String email;
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id",name = "role_id")
+    private Role role;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "user_security_id", referencedColumnName = "id")
+
+
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
     private UserSecurity security;
+
+
 }

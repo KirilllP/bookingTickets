@@ -1,23 +1,33 @@
 package com.booking.app.entity;
 
-import com.booking.app.enums.EnumPermission;
+import com.booking.app.enums.EnumAuthority;
 import com.booking.app.enums.EnumRole;
 import jakarta.persistence.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.Set;
-import java.util.UUID;
+
 
 @Entity
-@Table
-public class Role {
+@Table(name = "role")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Role{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
-    @Enumerated
+    private int id;
+    @Enumerated(EnumType.STRING)
     private EnumRole role;
-    @Column
-    private Set<EnumPermission> privileges;
 
+
+
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    private Set<User> users;
 
 
 }

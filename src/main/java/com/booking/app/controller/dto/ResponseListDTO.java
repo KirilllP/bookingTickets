@@ -1,16 +1,16 @@
 package com.booking.app.controller.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ResponseDTO <T> {
-    private T data;
+public class ResponseListDTO<T> {
+    private List<T> data;
 }
