@@ -11,12 +11,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Valid
 public class RoleDTO {
-    private int id;
+    private final int id;
     @NotNull
-    private EnumRole role;
+    private final EnumRole enumRole;
 
 }

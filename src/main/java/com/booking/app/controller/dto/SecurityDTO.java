@@ -11,25 +11,26 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
-@Valid
 public class SecurityDTO {
     private UUID id;
 
-    @Pattern(regexp = "[A-Za-z]+", message = "Your login can not be blank")
-    @NotBlank
-    private String username;
+    @NotBlank(message = "Invalid Login: Empty login")
+    @NotNull(message = "Invalid Login: Login is NULL")
+    @Size(min = 5, max = 30, message = "Invalid Login: Must be of 5 - 30 characters")
+    private final String username;
 
-    @Pattern(regexp = "[A-Za-z]+", message = "Your password can not be blank")
-    @NotBlank
-    private String password;
+    @NotBlank(message = "Invalid Password: Empty password")
+    @NotNull(message = "Invalid Password: Password is NULL")
+    @Size(min = 8, max = 30, message = "Invalid Password: Must be of 8 - 30 characters")
+    private final String password;
 
-    @NotBlank
-    @Email
-    private String email;
+    @NotNull(message = "Invalid Email: Email is NULL")
+    @Email(message = "Invalid email: This is not a valid email format")
+    private final String email;
 
-    private UserDTO user;
+   // @Valid Это запускает проверку вложенного объекта
+    private final UserDTO user;
 
 
 }

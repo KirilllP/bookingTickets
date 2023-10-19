@@ -10,4 +10,6 @@ import org.springframework.validation.annotation.Validated;
 public interface UserSecurityService {
     @Transactional
     SecurityDTO register(SecurityDTO user) throws UserAlreadyExistAuthenticationException;
+
+
 }

@@ -14,5 +14,5 @@ public class ErrorDetails {
     private LocalDateTime timeStamp;
     private String message;
     private String path;
-    private HttpStatus errorCode;
+    private HttpStatus status;
 }

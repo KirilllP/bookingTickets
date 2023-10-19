@@ -15,6 +15,7 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "users")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)

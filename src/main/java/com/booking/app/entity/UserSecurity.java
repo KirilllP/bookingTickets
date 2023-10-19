@@ -48,7 +48,7 @@ public class UserSecurity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getRole().getRole().getSimpleGrantedAuthorities();
+        return user.getRole().getEnumRole().getSimpleGrantedAuthorities();
     }
     @Override
     public boolean isAccountNonExpired() {

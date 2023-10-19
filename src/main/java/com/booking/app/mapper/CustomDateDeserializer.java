@@ -1,4 +1,4 @@
-package com.booking.app;
+package com.booking.app.mapper;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

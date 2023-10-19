@@ -2,48 +2,51 @@ package com.booking.app.exceptionhandling;
 
 import com.booking.app.exceptionhandling.exception.ResourceNotFoundException;
 import com.booking.app.exceptionhandling.exception.UserAlreadyExistAuthenticationException;
-import org.hibernate.exception.ConstraintViolationException;
+
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.multipart.support.MissingServletRequestPartException;
+
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
 
+import java.util.List;
+import java.util.Locale;
+import java.util.StringJoiner;
+
 @RestControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception, HttpHeaders headers, HttpStatusCode status, WebRequest webRequest) {
+        BindingResult bindingResult = exception.getBindingResult();
+        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+        StringJoiner stringJoiner = new StringJoiner(", ");
+        for (FieldError fieldError : fieldErrors) {
+            stringJoiner.add(fieldError.getDefaultMessage());
+        }
         ErrorDetails errorDetails = new ErrorDetails(
                 LocalDateTime.now(),
-                exception.getMessage(),
+                stringJoiner.toString(), // Set the error messages in your error details
                 webRequest.getDescription(false),
                 HttpStatus.BAD_REQUEST
         );
-        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorDetails, status);
     }
 
-//        @ExceptionHandler(ConstraintViolationException.class)
-//    public ResponseEntity<ErrorDetails> handleValidation(ConstraintViolationException exception, WebRequest webRequest) {
-//
-//        ErrorDetails errorDetails = new ErrorDetails(
-//                LocalDateTime.now(),
-//                exception.getMessage(),
-//                webRequest.getDescription(false),
-//               HttpStatus.BAD_REQUEST
-//        );
-//        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
-//    }
-
-
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorDetails> notFound(ResourceNotFoundException exception, WebRequest webRequest) {
 
@@ -56,9 +59,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
+    @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(UserAlreadyExistAuthenticationException.class)
     public ResponseEntity<ErrorDetails> userAlreadyExist(UserAlreadyExistAuthenticationException exception, WebRequest webRequest) {
-
         ErrorDetails errorDetails = new ErrorDetails(
                 LocalDateTime.now(),
                 exception.getMessage(),
@@ -68,7 +71,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 
         return new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT);
     }
-
 
 
 //    @ExceptionHandler(IllegalArgumentException.class)

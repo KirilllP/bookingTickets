@@ -12,9 +12,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "role")
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Builder
 public class Role{
 
@@ -22,12 +22,11 @@ public class Role{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Enumerated(EnumType.STRING)
-    private EnumRole role;
-
-
+    private  EnumRole enumRole;
 
     @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
     private Set<User> users;
+
 
 
 }

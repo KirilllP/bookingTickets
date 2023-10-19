@@ -1,4 +1,4 @@
-package com.booking.app;
+package com.booking.app.datasource;
 
 import com.booking.app.entity.Role;
 import com.booking.app.enums.EnumRole;
@@ -18,8 +18,8 @@ public class RoleLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Role roleUser = Role.builder().role(EnumRole.USER).build();
-        Role roleAdmin = Role.builder().role(EnumRole.ADMIN).build();
+        Role roleUser = Role.builder().enumRole(EnumRole.USER).build();
+        Role roleAdmin = Role.builder().enumRole(EnumRole.ADMIN).build();
         roleRepository.save(roleAdmin);
         roleRepository.save(roleUser);
     }
